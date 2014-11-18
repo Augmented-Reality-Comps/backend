@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Word Finder</title>
+    <style type="text/css">
+        body{
+        background-color:#82cafa;}
+        
+        h1{
+        color: #151b54;
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        font-size: 80px;
+        position: relative; top: 90px; left: 260px;}
+        
+        h4{
+        color: #151b54;
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        font-size: 20px;
+        font-style: italic;
+        position: relative; top: 40px; left: 400px;}
+        
+        a:link{
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        color:#2554c7;} /* unvisited link */
+        
+        a:visited{
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        color:#2554c7;} /* visited link */
+        
+        a:hover{
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        color:#357ec7;}  /* mouse over link */
+        
+        .helpStyle{
+        position: absolute; top: 30px; right: 120px;}
+        
+        .aboutUsStyle{
+        position: absolute; top: 30px; right: 40px;}
+        
+        .sourceStyle{
+        position: absolute; bottom: 40px; left: 430px;}
+        
+        form{
+        position: relative; top: 70px; left: 350px;}
+        
+        .search{
+        margin:3px;
+        background-color: #CCE6FF;}
+        
+        .rounded{
+        padding:6px 25px 6px 25px;
+        border-radius:15px;
+        -moz-border-radius:15px;
+        -webkit-border-radius:15px;}
+        
+        .button{
+        padding:3px 10px 3px 10px;
+        color: #151b54;
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        font-size: 13px;}
+        
+        .checkText{
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        color: #151b54;
+        font-size: 13px;}
+        
+        .infoText{
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        color: #151b54;
+        font-size: 25px;
+        position: relative; top: 130px; left: 240px;}
+    </style>
+</head>
+
+<body>
+    <h1>Word Finder</h1>
+    <h4>For all your word puzzle needs</h4>
+    <span class="helpStyle"><a href="showsource.py?source=index.py">Help</a></span>
+    <span class="aboutUsStyle"><a href="showsource.py?source=index.py">About Us</a></span>
+    <form action="index.py" method="get">
+        <span><input type="text" name="searchText" class="search rounded" placeholder="Type up to 45 letters" value="%s"></span>
+        <span><input type="submit" class="search button" value="Go"></span></p>
+        <input type="checkbox" name="checkbox" value="%s"><span class="checkText">Only include words with letters in the above order</span><br>
+    </form>
+    %s
+    %s
+    <p><span class="infoText">To include a wild card letter, use the * symbol</span></p>
+    <p><span class="sourceStyle"><a href="showsource.py?source=index.py">python source code</a></span></p>
+</body>
+</html>

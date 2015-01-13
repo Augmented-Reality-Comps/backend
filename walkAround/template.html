@@ -19,31 +19,68 @@
 
 		<script>
 
+		function changeX(distance) {
+			camera.position.x += distance;
+		}
+
+		function changeY(distance) {
+			camera.position.y += distance;
+		}
+
+		function changeZ(distance) {
+			camera.position.z += distance;
+		}
+
+		function angleX(radians) {
+			camera.rotation.x += radians
+		}
+
+		function angleY(radians) {
+			camera.rotation.y += radians
+		}
+
+		function angleZ(radians) {
+			camera.rotation.z += radians
+		}
+
+		function getLocation(){
+			return [camera.position.x, camera.position.y, camera.position.z]
+		}
+
+		function getAngle(){
+			return [camera.rotation.x, camera.rotation.y, camera.rotation.z]
+		}
 
 //			var container, stats;
 
-			var camera, renderer, objects;
+			var camera, scene, renderer, objects;
 			var particleLight;
-                        var scene = new THREE.Scene();
 			var dae;
-                        var objectList = ['item.dae','teapot.dae'];
-                        init();
+
 			var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-                        for (var i=0; i<objectList.length; i++) {
-                            console.log(i+" "+objectList[i]);
-			    loader.load( objectList[i], function ( collada ) {
+			loader.load( '%s', function ( collada ) {
+
 				dae = collada.scene;
 
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.02;
+				dae.traverse( function ( child ) {
 
-                                dae.updateMatrix();
-                                scene.add(dae);
+					if ( child instanceof THREE.SkinnedMesh ) {
+
+						var animation = new THREE.Animation( child, child.geometry.animation );
+						animation.play();
+
+					}
+
+				} );
+
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.02;
+				dae.updateMatrix();
+
+				init();
 				animate();
 
-
-			    } );
-                         }
+			} );
 
 			function init() {
 
@@ -51,8 +88,12 @@
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 2, window.innerWidth / window.innerHeight, 1, 2000 );
-				camera.position.set( 2, 2, 3 );
 
+				scene = new THREE.Scene();
+
+				// Add the COLLADA
+				dae.position.set(%s,%s,%s)
+				scene.add( dae );
 
 				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xff0000 } ) );
 				scene.add( particleLight );
@@ -72,6 +113,9 @@
 
 				window.addEventListener( 'resize', onWindowResize, false );
 
+				camera.position.set(%s, %s, %s);
+				camera.rotation.set(%s,%s,%s);
+				//camera.lookAt(new THREE.Vector3(0,0,0));
 			}
 
 			function onWindowResize() {
@@ -99,21 +143,14 @@
 
 				var timer = Date.now() * 0.0005;
 
-				camera.position.x = 10;
-				camera.position.y = 20;
-				camera.position.z = 40;
-
-				camera.lookAt( new THREE.Vector3(.3, -.1, 0));
 
 //				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
 //				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
 //				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
-				
+
 				particleLight.position.x = 100.0;
 				particleLight.position.y = 100.0;
 				particleLight.position.z = 20.0;
-				
-				console.log(particleLight.position.x, particleLight.position.y, particleLight.position.z);
 
 				THREE.AnimationHandler.update( clock.getDelta() );
 
@@ -122,5 +159,19 @@
 			}
 
 		</script>
+		<!---roughly .2 degrees
+		we need to work on finding precise values yay -->
+		<button onclick="changeX(.5)"> + lat </button>
+		<button onclick="changeX(-.5)"> - lat </button>
+		<button onclick="changeY(.5)"> + long </button>
+		<button onclick="changeY(-.5)"> - long </button>
+		<button onclick="changeZ(.5)"> + alt </button>
+		<button onclick="changeZ(-.5)"> - alt </button>
+		<button onclick="angleX(.004)"> + pitch </button>
+		<button onclick="angleX(-.004)"> - pitch </button>
+		<button onclick="angleY(.004)"> + roll </button>
+		<button onclick="angleY(-.004)"> - roll </button>
+		<button onclick="angleZ(.004)"> + yaw </button>
+		<button onclick="angleZ(-.004)"> - yaw </button>
 	</body>
 </html>

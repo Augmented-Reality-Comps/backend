@@ -67,9 +67,8 @@ def printMainPageAsHTML(lat, longitude, alt, templateFileName):
     file = db.getData(getQuery())
 
         #file is a list of tuples
-    object_loc = (file[0][0], file[0][2], file[0][1])
+    object_loc = (file[1][0], file[1][2], file[1][1])
 
-    alt = str(285.737)
 
         #show what we pull from database
 
@@ -88,7 +87,7 @@ def printMainPageAsHTML(lat, longitude, alt, templateFileName):
     f.write(log)
     f.close();
 
-    outputText = templateText % ('teapot.dae', object_loc[0], object_loc[1], object_loc[2], float(lat), float(alt), float(longitude), 0, 0, 0)
+    outputText = templateText % ('teapot.dae', object_loc[0], object_loc[1], object_loc[2], lat, alt, longitude, 0, 0, 0)
     '''except IndexError, e:
         outputText = 'Cannot read template file or there is no shape at that location "%s".' % (templateFileName)
 

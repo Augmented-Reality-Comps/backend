@@ -22,28 +22,34 @@
 
 //			var container, stats;
 
-			var camera, renderer, objects;
+			var camera, scene, renderer, objects;
 			var particleLight;
-                        var scene = new THREE.Scene();
 			var dae;
-                        var objectList = ['item.dae','teapot.dae'];
-                        init();
+
 			var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
-                        for (var i=0; i<objectList.length; i++) {
-                            console.log(i+" "+objectList[i]);
-			    loader.load( objectList[i], function ( collada ) {
+			loader.load( '%s', function ( collada ) {
+
 				dae = collada.scene;
 
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.02;
+				dae.traverse( function ( child ) {
 
-                                dae.updateMatrix();
-                                scene.add(dae);
+					if ( child instanceof THREE.SkinnedMesh ) {
+
+						var animation = new THREE.Animation( child, child.geometry.animation );
+						animation.play();
+
+					}
+
+				} );
+
+				dae.scale.x = dae.scale.y = dae.scale.z = 0.02;
+				dae.updateMatrix();
+
+				init();
 				animate();
 
-
-			    } );
-                         }
+			} );
 
 			function init() {
 
@@ -53,6 +59,11 @@
 				camera = new THREE.PerspectiveCamera( 2, window.innerWidth / window.innerHeight, 1, 2000 );
 				camera.position.set( 2, 2, 3 );
 
+				scene = new THREE.Scene();
+
+				// Add the COLLADA
+
+				scene.add( dae );
 
 				particleLight = new THREE.Mesh( new THREE.SphereGeometry( 8, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xff0000 } ) );
 				scene.add( particleLight );

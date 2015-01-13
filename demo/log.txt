@@ -167,3 +167,148 @@ object location: (44.462406, 285.737, -93.1539)
 Camera location: 44.462285.737-94.1539
 Camera position: 1.57, 0, 0
 -------------------------------------------------
+Month:01 Day:08 Hour:15 Min:07 Sec:55
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:48 Sec:48
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:52 Sec:33
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:52 Sec:47
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:53 Sec:09
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:54 Sec:39
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:56 Sec:24
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:56 Sec:28
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-83.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:56 Sec:36
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 34.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:56 Sec:39
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 54.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:56 Sec:44
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:57 Sec:58
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:58 Sec:38
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:58 Sec:55
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:58 Sec:57
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:59 Sec:03
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-83.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:59 Sec:20
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.46285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:59 Sec:48
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:15 Min:59 Sec:57
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 64.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:00 Sec:02
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 54.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:01 Sec:40
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 54.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:03 Sec:21
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 54.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:03 Sec:25
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:03 Sec:45
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 285.737
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:03 Sec:47
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 54.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:03 Sec:56
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 44.462406285.737-93.153
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:16 Sec:29
+object location: (44.462406, 285.737, -93.1539)
+Camera location: 10285.73710
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:17 Sec:16
+object location: (10.0, 10.0, 10.0)
+Camera location: 101010
+Camera position: 1.57, 0, 0
+-------------------------------------------------
+Month:01 Day:10 Hour:16 Min:17 Sec:21
+object location: (10.0, 10.0, 10.0)
+Camera location: 151010
+Camera position: 1.57, 0, 0
+-------------------------------------------------

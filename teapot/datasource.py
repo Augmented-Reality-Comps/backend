@@ -5,7 +5,7 @@ class DataSource:
   def __init__(self):
     pass
 
-  def getData(self):
+  def getData(self, query):
     '''
     this is the actual query to the database. every function that wants information
     from the database MUST call this function
@@ -23,9 +23,8 @@ class DataSource:
     # Query the database
     try:
       cursor = connection.cursor()
-      #cursor.execute(query)
-      cursor.execute('Select * from test2')
-      return cursor.fetchone()[0]
+      cursor.execute(query)
+      return cursor.fetchall()
       
 
     # An alternative to "for row in cursor.fetchall()" is "for row in cursor". The former

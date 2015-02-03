@@ -109,7 +109,7 @@
     <visual_scene id="unnamed_scene" name="unnamed_scene">
       <node id="Teapot-node" name="Teapot" type="NODE">
         <translate>0 0 0</translate>
-        <rotate>1 0 0 -90</rotate>
+        <rotate>1 0 0 0</rotate>
         <scale>0.230792 0.230792 0.230792</scale>
         <node id="Teapot-node_PIVOT" name="Teapot_PIVOT" type="NODE">
           <matrix>1 0 0 -4.50735 0 1 0 0 0 0 1 -33.1636 0 0 0 1</matrix>

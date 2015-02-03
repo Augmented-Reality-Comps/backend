@@ -54,7 +54,7 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
     f.close()
 
     #put the correct data into the template file
-    outputText = templateText % ('teapot.dae', object_loc[0], object_loc[1], object_loc[2], longitude, latitude, altitude, pitch, roll, yaw)
+    outputText = templateText % (file[0][3], object_loc[0], object_loc[1], object_loc[2], latitude, longitude, altitude, pitch, roll, yaw)
 
     #displays the page
     print 'Content-type: text/html\r\n\r\n',

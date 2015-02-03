@@ -26,7 +26,7 @@
 			var particleLight;
                         var scene = new THREE.Scene();
 			var dae;
-                        var objectList = ['item.dae','teapot.dae'];
+                        var objectList = ['%s'];
                         init();
 			var loader = new THREE.ColladaLoader();
 			loader.options.convertUpAxis = true;
@@ -108,11 +108,11 @@
 //				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
 //				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
 //				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
-				
+
 				particleLight.position.x = 100.0;
 				particleLight.position.y = 100.0;
 				particleLight.position.z = 20.0;
-				
+
 				console.log(particleLight.position.x, particleLight.position.y, particleLight.position.z);
 
 				THREE.AnimationHandler.update( clock.getDelta() );

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - collada teapot</title>
+        <title>Walkaround Test</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -9,15 +9,19 @@
 				background-color: transparent;
 				margin: 0px;
 				overflow: hidden;
+				background-size: 100% 100%;
 			}
 		</style>
 	</head>
 	<body>
 		<script src="three.min.js" type="text/javascript"></script>
-
 		<script src="ColladaLoader.js" type="text/javascript"></script>
 
 		<script>
+		function setLocation(latitude, longitude, altitude, yaw, pitch, roll){
+			camera.position = (latitude, longitude, altitude);
+			camera.rotation = (yaw, pitch, roll);
+		}
 
 		function changeX(distance) {
 			camera.position.x += distance;
@@ -51,8 +55,6 @@
 			return [camera.rotation.x, camera.rotation.y, camera.rotation.z]
 		}
 
-//			var container, stats;
-
 			var camera, scene, renderer, objects;
 			var particleLight;
 			var dae;
@@ -74,7 +76,7 @@
 
 				} );
 
-				dae.scale.x = dae.scale.y = dae.scale.z = 0.02;
+				dae.scale.x = dae.scale.y = dae.scale.z = 1;
 				dae.updateMatrix();
 
 				init();
@@ -87,7 +89,7 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 2, window.innerWidth / window.innerHeight, 1, 2000 );
+				camera = new THREE.PerspectiveCamera( 100, window.innerWidth / window.innerHeight, 1, 2000 );
 
 				scene = new THREE.Scene();
 
@@ -113,9 +115,11 @@
 
 				window.addEventListener( 'resize', onWindowResize, false );
 
+
+<!--- camera position and rotation -->
 				camera.position.set(%s, %s, %s);
 				camera.rotation.set(%s,%s,%s);
-				//camera.lookAt(new THREE.Vector3(0,0,0));
+				//camera.lookAt(dae.position);
 			}
 
 			function onWindowResize() {
@@ -144,9 +148,10 @@
 				var timer = Date.now() * 0.0005;
 
 
-//				particleLight.position.x = Math.sin( timer * 4 ) * 3009;
-//				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
-//				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+		/*		particleLight.position.x = Math.sin( timer * 4 ) * 3009;
+				particleLight.position.y = Math.cos( timer * 5 ) * 4000;
+				particleLight.position.z = Math.cos( timer * 4 ) * 3009;
+				*/
 
 				particleLight.position.x = 100.0;
 				particleLight.position.y = 100.0;
@@ -159,8 +164,7 @@
 			}
 
 		</script>
-		<!---roughly .2 degrees
-		we need to work on finding precise values yay -->
+		<!---roughly .2 degrees -->
 		<button onclick="changeX(.5)"> + lat </button>
 		<button onclick="changeX(-.5)"> - lat </button>
 		<button onclick="changeY(.5)"> + long </button>

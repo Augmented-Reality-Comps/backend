@@ -57,13 +57,10 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-
 }
-
 
 function render() {
   requestAnimationFrame(render);
   THREE.AnimationHandler.update(clock.getDelta());
   renderer.render(scene, camera);
-
 }

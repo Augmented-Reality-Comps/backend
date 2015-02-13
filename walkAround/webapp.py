@@ -4,6 +4,7 @@ import cgi
 import time
 from datasource import DataSource
 
+
 def sanitizeUserInput(s):
     ''' does a basic sanitation on input
     '''
@@ -19,6 +20,17 @@ def getCGIParameters():
     form = cgi.FieldStorage()
     parameters = {'latitude':'', 'longitude':'', 'altitude':'', 'yaw':'', 'pitch':'', 'roll':''}
 
+
+    #sets default values for each field
+    parameters['latitude'] = 0
+    parameters['longitude'] = 0
+    parameters['altitude'] = 0
+    parameters['yaw'] = 0
+    parameters['pitch'] = 0
+    parameters['roll'] = 0
+
+
+    #sets parameters as they are passed
     if 'latitude' in form:
         parameters['latitude'] = sanitizeUserInput(form['latitude'].value)
 
@@ -41,10 +53,17 @@ def getCGIParameters():
 
 
 def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templateFileName):
+    '''
+    Prints the page as an htmp based off of template.html. There are 9 fields that must be filled
+    in template.html they are in the following order:
+    dae file path, object location(lat, lon, alt), camera location(lat, lon, alt), camera rotation(pitch, roll, yaw)
+    pitch roll and yaw must be in radians
+    '''
+
 
     file = getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll)
     #pulls the latitude longitude altitude from th database.
-    #THIS WORKS ONLY FOR 1 OBJECT. MUST FIX SOON
+    #THIS WORKS ONLY FOR 1 OBJECT. Fix when there is time
     object_loc = (file[0][0], file[0][1], file[0][2])
 
 
@@ -54,6 +73,7 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
     f.close()
 
     #put the correct data into the template file
+    #angles must be in radians
     outputText = templateText % (file[0][3], object_loc[0], object_loc[1], object_loc[2], latitude, longitude, altitude, pitch, roll, yaw)
 
     #displays the page
@@ -65,6 +85,10 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
 
 
 def makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc):
+    '''
+    Makes a log in log.txt. Every time a http request is sent, log the current time, object position,
+    camera position, and camera orientation
+    '''
     log = time.strftime("Month:%m Day:%d Hour:%H Min:%M Sec:%S\n")
     log += "object location: " + str(object_loc)
     log += "\nCamera location: " + latitude + ", " + altitude + ", " + longitude
@@ -76,8 +100,13 @@ def makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc):
 
 
 def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
+    '''
+    Gets all the relevant objects for the given location. Currently this returns everything in the database.
+    '''
     #creates a connection to the database
     db = DataSource()
+
+    #make the query
     return db.getData('Select * from demo;')
 
 def main():

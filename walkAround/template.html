@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-    <title>Walkaround Test</title>
+    <title>Augmented Reality Walkaround</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
@@ -20,6 +20,8 @@
 
 				dae = collada.scene;
 				dae.scale.x = dae.scale.y = dae.scale.z = 1;
+				//dae.scale.x = dae.scale.y = dae.scale.z = .2;
+
 				dae.updateMatrix();
 
 				init();
@@ -32,7 +34,7 @@
 				container = document.createElement('div');
 				document.body.appendChild(container);
 
-				camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 2000);
+				camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
 
 				scene = new THREE.Scene();
 
@@ -62,8 +64,8 @@
 
 				<!--- camera position and rotation -->
 				camera.position.set( % s, % s, % s);
-				camera.rotation.set(%s,%s,%s);
-				//camera.lookAt(dae.position);
+				//camera.rotation.set( %s , %s, %s);
+				camera.lookAt(dae.position);
 			}
 
 		</script>

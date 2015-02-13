@@ -1,37 +1,3 @@
-
-window.onload = function() {
-  console.log("loaded");
-}
-
-function setLocation(latitude, longitude, altitude, yaw, pitch, roll) {
-  camera.position = (latitude, longitude, altitude);
-  camera.rotation = (yaw, pitch, roll);
-}
-
-function changeX(distance) {
-  camera.position.x += distance;
-}
-
-function changeY(distance) {
-  camera.position.y += distance;
-}
-
-function changeZ(distance) {
-  camera.position.z += distance;
-}
-
-function anglePitch(radians) {
-  camera.rotation.x += radians
-}
-
-function angleRoll(radians) {
-  camera.rotation.y += radians
-}
-
-function angleYaw(radians) {
-  camera.rotation.z += radians
-}
-
 function getLocation() {
   return [camera.position.x, camera.position.y, camera.position.z]
 }
@@ -64,3 +30,37 @@ function render() {
   THREE.AnimationHandler.update(clock.getDelta());
   renderer.render(scene, camera);
 }
+
+//Camera view button methods
+function changeX(distance) {
+  camera.position.x += distance;
+}
+
+function changeY(distance) {
+  camera.position.y += distance;
+}
+
+function changeZ(distance) {
+  camera.position.z += distance;
+}
+
+function anglePitch(radians) {
+  camera.rotation.x += radians
+}
+
+function angleRoll(radians) {
+  camera.rotation.y += radians
+}
+
+function angleYaw(radians) {
+  camera.rotation.z += radians
+}
+
+/*
+//Unused code
+function setLocation(latitude, longitude, altitude, yaw, pitch, roll) {
+  camera.position = (latitude, longitude, altitude);
+  camera.rotation = (yaw, pitch, roll);
+}
+
+*/

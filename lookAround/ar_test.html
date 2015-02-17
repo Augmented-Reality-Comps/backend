@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+        <button onclick="pitchPlus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >pitch+</button>
+        &nbsp;
+        <button onclick="pitchMinus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >pitch-</button>
+        &nbsp;
+        <button onclick="rollPlus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >roll+</button>
+        &nbsp;
+        <button onclick="rollMinus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >roll-</button>
+        &nbsp;
+        <button onclick="yawPlus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >yaw+</button>
+        &nbsp;
+        <button onclick="yawMinus();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >yaw-</button>
+        &nbsp;
+        <button onclick="reset();" type="button" style="width:100px; background-color:#226622; color:#DDDDDD" >reset</button>
+
+		<script src="js/three.min.js"></script>
+		<script src="js/ColladaLoader.js"></script>
+		<script>
+
+            // Renderer
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize(window.innerWidth, window.innerHeight);
+            container = document.createElement('div');
+            document.body.appendChild(container);
+            container.appendChild(renderer.domElement);
+
+            // Scene
+
+            // scenario values: sizes_looking_down, sizes_from_xplus, ios_surrounded, other.
+            var geometry;
+            var scenario = 'ios_surrounded';
+
+            var originX, originY, originZ;
+            var cameraX, cameraY, cameraZ, cameraPitch, cameraRoll, cameraYaw;
+            var showLight1, light1X, light1Y, light1Z, light1Radius, light1Color;
+            var showLight2, light2X, light2Y, light2Z, light2Radius, light2Color;
+
+            var showCube, cubeX, cubeY, cubeZ, cubeXLength, cubeYLength, cubeHeight;
+            var showTorus, torusX, torusY, torusZ, torusRadius, torusTubeDiameter;
+            var showTeapot, teapotX, teapotY, teapotZ, teapotScale;
+            var showCylinder, cylinderX, cylinderY, cylinderZ, cylinderRadius, cylinderHeight;
+            var showDodecahedron, dodecahedronX, dodecahedronY, dodecahedronZ, dodecahedronPitch, dodecahedronRoll, dodecahedronYaw;
+            var showTetrahedron, tetrahedronX, tetrahedronY, tetrahedronZ, tetrahedronPitch, tetrahedronRoll, tetrahedronYaw;
+            var showSphere, sphereX, sphereY, sphereZ, spherePitch, sphereRoll, sphereYaw;
+
+            if (scenario == 'sizes_looking_down') {
+                originX = 0, originY = 0, originZ = 0;
+                cameraX = 0, cameraY = 0, cameraZ = 100, cameraPitch = 0, cameraRoll = 0, cameraYaw = 0;
+
+                cosine = Math.cos(0.7), sine = Math.sin(0.7);
+                showLight1 = true, light1X = 20 * cosine, light1Y = 20 * sine, light1Z = 20, light1Radius = 0.5, light1Color = 0x00ff00;
+                showLight2 = true, light2X = 20 * cosine, light2Y = -20 * sine,  light2Z = 20, light2Radius = 0.5, light2Color = 0xff0000;
+
+                showCube = true, cubeX = 0, cubeY = 40, cubeZ = 0, cubeXLength = 30, cubeYLength = 30, cubeHeight = 30;
+                showTorus = true, torusX = 0, torusY = -40, torusZ = 0, torusRadius = 15, torusTubeDiameter = 4;
+                showTeapot = true, teapotX = 0, teapotY = 0, teapotZ = 0, teapotScale = 1;
+                showCylinder = true, cylinderX = -40, cylinderY = 0, cylinderZ = 0, cylinderRadius = 15, cylinderHeight = 40;
+                showDodecahedron = true, dodecahedronX = -40, dodecahedronY = -40, dodecahedronZ = 0, dodecahedronRadius = 15;
+                showTetrahedron = true, tetrahedronX = -40, tetrahedronY = 40, tetrahedronZ = 0, tetrahedronRadius = 15;
+
+            } else if (scenario == 'sizes_from_xplus') {
+                originX = 0, originY = 0, originZ = 0;
+                cameraX = 60, cameraY = 0, cameraZ = 0, cameraPitch = 1.57, cameraRoll = 1.57, cameraYaw = 0;
+
+                cosine = Math.cos(0.7), sine = Math.sin(0.7);
+                showLight1 = true, light1X = 20 * cosine, light1Y = 20 * sine, light1Z = 20, light1Radius = 0.5, light1Color = 0x00ff00;
+                showLight2 = true, light2X = 20 * cosine, light2Y = -20 * sine,  light2Z = 20, light2Radius = 0.5, light2Color = 0xff0000;
+
+                showCube = true, cubeX = 0, cubeY = 40, cubeZ = 0, cubeXLength = 30, cubeYLength = 30, cubeHeight = 30;
+                showTorus = true, torusX = 0, torusY = -40, torusZ = 0, torusRadius = 15, torusTubeDiameter = 4;
+                showTeapot = true, teapotX = 0, teapotY = 0, teapotZ = 0, teapotScale = 1;
+                showCylinder = true, cylinderX = -40, cylinderY = 0, cylinderZ = 0, cylinderRadius = 15, cylinderHeight = 40;
+                showDodecahedron = true, dodecahedronX = -40, dodecahedronY = -40, dodecahedronZ = 0, dodecahedronRadius = 15;
+                showTetrahedron = true, tetrahedronX = -40, tetrahedronY = 40, tetrahedronZ = 0, tetrahedronRadius = 15;
+
+            } else if (scenario == 'ios_surrounded') {
+                //originX = -9315.3, originY = 4446.3, originZ = 298.0;
+                originX = originY = originZ = 0;
+                cameraX = originX, cameraY = originY, cameraZ = originZ, cameraPitch = 0, cameraRoll = 0, cameraYaw = 0;
+
+                cosine = Math.cos(0.7), sine = Math.sin(0.7);
+                showLight1 = true, light1X = originX + 20 * cosine, light1Y = originY + 20 * sine, light1Z = originZ + 20, light1Radius = 0.5, light1Color = 0x00ff00;
+                showLight2 = true, light2X = originX + 20 * cosine, light2Y = originY - 20 * sine, light2Z = originZ + 20, light2Radius = 0.5, light2Color = 0xff0000;
+
+                showCube = true, cubeX = originX - 40, cubeY = originY, cubeZ = originZ, cubeXLength = 10, cubeYLength = 10, cubeHeight = 10;
+                showTorus = true, torusX = originX, torusY = originY, torusZ = originZ - 100, torusRadius = 15, torusTubeDiameter = 4;
+                showTeapot = true, teapotX = originX, teapotY = originY, teapotZ = originZ + 50, teapotScale = 1;
+                showCylinder = false, cylinderX = -40, cylinderY = 0, cylinderZ = 0, cylinderRadius = 15, cylinderHeight = 40;
+                showDodecahedron = true, dodecahedronX = originX, dodecahedronY = originY + 50, dodecahedronZ = originZ, dodecahedronRadius = 15;
+                showTetrahedron = false, tetrahedronX = -40, tetrahedronY = 40, tetrahedronZ = 0, tetrahedronRadius = 15;
+
+            } else {
+            }
+
+            var material = new THREE.MeshPhongMaterial( { ambient: 0x555555,
+                                                          color: 0x555555,
+                                                          specular: 0xffffff,
+                                                          shininess: 50,
+                                                          transparent: true,
+                                                          opacity: 0.7,
+                                                          shading: THREE.SmoothShading } );
+
+            var radius = 40;
+            var lightAngle = 0.7;
+
+			var scene = new THREE.Scene();
+            scene.add(new THREE.AmbientLight(0x222222));
+
+            // Camera on x-axis
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+
+            // Point lights
+            if (showLight1) {
+                geometry = new THREE.SphereGeometry(light1Radius, 8, 8);
+                light = new THREE.PointLight(light1Color, 2, 250);
+                var sphere = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: light1Color }));
+                light.add(sphere)
+                light.position.set(light1X, light1Y, light1Z);
+                scene.add(light);
+            }
+
+            if (showLight2) {
+                geometry = new THREE.SphereGeometry(light2Radius, 8, 8);
+                light = new THREE.PointLight(light2Color, 2, 250);
+                var sphere = new THREE.Mesh(geometry, new THREE.MeshBasicMaterial({ color: light2Color }));
+                light.add(sphere)
+                light.position.set(light2X, light2Y, light2Z);
+                scene.add(light);
+            }
+
+            // Cube
+            if (showCube) {
+                geometry = new THREE.BoxGeometry(cubeXLength, cubeYLength, cubeHeight);
+                var cube = new THREE.Mesh(geometry, material);
+                cube.position.set(cubeX, cubeY, cubeZ);
+                scene.add(cube);
+            }
+
+            // Torus
+            if (showTorus) {
+                geometry = new THREE.TorusGeometry(torusRadius, torusTubeDiameter, 16, 16);
+                var torus = new THREE.Mesh(geometry, material);
+                torus.position.set(torusX, torusY, torusZ);
+                scene.add(torus);
+            }
+
+            // Teapot
+            if (showTeapot) {
+                var loader = new THREE.ColladaLoader();
+                loader.options.convertUpAxis = true;
+                loader.load('teapot.dae', function(collada) {
+                    var teapot = collada.scene;
+                    teapot.position.set(teapotX, teapotY, teapotZ);
+                    teapot.scale.x = teapot.scale.y = teapot.scale.z = teapotScale;
+                    teapot.updateMatrix();
+                    scene.add(teapot);
+                    renderer.render(scene, camera);
+                });
+            }
+
+            // Cylinder
+            if (showCylinder) {
+                geometry = new THREE.CylinderGeometry(cylinderRadius, cylinderRadius, cylinderHeight);
+                var cylinder = new THREE.Mesh(geometry, material);
+                cylinder.position.set(cylinderX, cylinderY, cylinderZ);
+                scene.add(cylinder);
+            }
+
+            // Tetrahedron
+            if (showTetrahedron) {
+                geometry = new THREE.TetrahedronGeometry(tetrahedronRadius);
+                var tetrahedron = new THREE.Mesh(geometry, material);
+                tetrahedron.position.set(tetrahedronX, tetrahedronY, tetrahedronZ);
+                scene.add(tetrahedron);
+            }
+
+            // Dodecahedron
+            if (showDodecahedron) {
+                geometry = new THREE.DodecahedronGeometry(dodecahedronRadius);
+                var dodecahedron = new THREE.Mesh(geometry, material);
+                dodecahedron.position.set(dodecahedronX, dodecahedronY, dodecahedronZ);
+                scene.add(dodecahedron);
+            }
+
+            resetCamera();
+
+            // Utility functions and event handlers.
+            var angleIncrement = 0.3927;
+
+            function resetCamera() {
+                camera.position.set(cameraX, cameraY, cameraZ);
+                camera.rotation.set(cameraPitch, cameraRoll, cameraYaw);
+                renderer.render(scene, camera);
+            }
+
+            function updateCamera(x, y, z, pitch, roll, yaw) {
+                camera.position.set(x, y, z);
+                camera.rotation.set(pitch, roll, yaw);
+                renderer.render(scene, camera);
+            }
+
+            function pitchPlus() {
+                camera.rotation.x += angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+            function pitchMinus() {
+                camera.rotation.x -= angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+            function rollPlus() {
+                camera.rotation.y += angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+            function rollMinus() {
+                camera.rotation.y -= angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+            function yawPlus() {
+                camera.rotation.z += angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+            function yawMinus() {
+                camera.rotation.z -= angleIncrement;
+				renderer.render(scene, camera);
+            }
+
+		</script>
+	</body>
+</html>

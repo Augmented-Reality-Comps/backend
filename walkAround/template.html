@@ -36,6 +36,7 @@
 
 				camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
 
+
 				scene = new THREE.Scene();
 
 				// Add the COLLADA
@@ -50,7 +51,8 @@
 				scene.add(particleLight);
 				scene.add(new THREE.AmbientLight(0x888888));
 
-				var pointLight = new THREE.PointLight(0xffffff, 2);
+				//var pointLight = new THREE.PointLight(0xffffff, 2);
+				var pointLight = new THREE.PointLight(0xff0000, 2);
 				particleLight.add(pointLight);
 
 				renderer = new THREE.WebGLRenderer();
@@ -64,8 +66,8 @@
 
 				<!--- camera position and rotation -->
 				camera.position.set( % s, % s, % s);
-				//camera.rotation.set( %s , %s, %s);
-				camera.lookAt(dae.position);
+				camera.rotation.set( %s , %s, %s);
+				//camera.lookAt(dae.position);
 			}
 
 		</script>

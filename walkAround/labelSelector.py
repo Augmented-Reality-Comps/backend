@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+# http://cmc307-08.mathcs.carleton.edu/~comps/backend/walkAround/labelSelector.py?latitude=44.46247&longitude=-93.1536
+
 import cgi
 from datasource import DataSource
 

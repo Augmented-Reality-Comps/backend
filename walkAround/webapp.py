@@ -81,23 +81,27 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
     print outputText
 
     #creates a log for debugging
-    makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc)
+    # makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc)
 
 
-def makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc):
-    '''
-    Makes a log in log.txt. Every time a http request is sent, log the current time, object position,
-    camera position, and camera orientation
-    '''
-    log = time.strftime("Month:%m Day:%d Hour:%H Min:%M Sec:%S\n")
-    log += "object location: " + str(object_loc)
-    log += "\nCamera location: " + latitude + ", " + altitude + ", " + longitude
-    log += "\nCamera position: " + yaw + ", " + pitch + ", " + roll + "\n-------------------------------------------------\n"
+# def makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc):
+#     '''
+#     Makes a log in log.txt. Every time a http request is sent, log the current time, object position,
+#     camera position, and camera orientation
+#     '''
+#     log = time.strftime("Month:%m Day:%d Hour:%H Min:%M Sec:%S\n")
+#     #log += latitude
+#     #log += "object location: " + str(object_loc)
+#     #log += "\nCamera location: " + latitude + ", " + altitude + ", " + longitude
+#     #log += "\nCamera position: " + yaw + ", " + pitch + ", " + roll + "\n-------------------------------------------------\n"
 
-    f = open('log.txt', 'a')
-    f.write(log)
-    f.close();
+#     f = open('log.txt', 'a')
+#     f.write(log)
+#     f.close()
 
+#     g = open('testlog.txt', 'a')
+#     g.write("testing")
+#     g.close()
 
 def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
     '''

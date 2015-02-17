@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <title>Augmented Reality Walkaround</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+		<script src="three.min.js" type="text/javascript"></script>
+		<script src="ColladaLoader.js" type="text/javascript"></script>
+		<script src="threeRenderer.js" type="text/javascript"></script>
+		<script src="THREEx.WindowResize.js"></script>
+		<script>
+			var camera = null;
+			var scene = null;
+			var renderer = null;
+			var objects = null;
+			var particleLight = null;
+			var dae = null;
+			var clock = new THREE.Clock();
+			var environment = null;
+			var container = null;
+
+			function init() {
+				environment = new THREE.Scene();
+
+				var SCREEN_WIDTH = window.innerWidth,
+					SCREEN_HEIGHT = window.innerHeight;
+
+				var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 2000;
+
+				camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+				environment.add(camera);
+				camera.position.set(0,0,0);
+				camera.lookAt(new THREE.Vector3(0,0,0));
+
+				renderer = new THREE.WebGLRenderer({ antialias:true });
+				renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+				container = document.createElement('div');
+				document.body.appendChild(container);
+				container.appendChild(renderer.domElement);
+
+				THREEx.WindowResize(renderer, camera);
+
+				environment.add(createSphere(1,0,0,0,0xff0000));  //red
+				environment.add(createSphere(1,10,0,0,0x00ff00)); //green
+				environment.add(createSphere(1,0,10,0,0x0000ff)); //blue
+				environment.add(createSphere(1,0,0,10,0xff00ff)); //pink
+				environment.add(createPlane(10,0,0,0,0xffff00)); //yellow
+				camera.lookAt(new THREE.Vector3(0,0,1));
+				console.log(camera.rotation);
+
+				loadModel('/teapot.dae');
+			}
+
+			function createSphere(radius,x,y,z,color){
+				var geometry = new THREE.SphereGeometry(radius);
+				var material = new THREE.MeshBasicMaterial( {color: color} );
+				var sphere = new THREE.Mesh( geometry, material );
+				sphere.position.set(x,y,z);
+				return sphere;
+			}
+
+			function createPlane(radius,x,y,z,color) {
+				var geometry = new THREE.PlaneGeometry( radius, radius );
+				var material = new THREE.MeshBasicMaterial( {color: color, side: THREE.DoubleSide} );
+				var plane = new THREE.Mesh( geometry, material );
+				plane.rotation.x = -Math.PI/2;
+				plane.position.set(0,x,y,z);
+				return plane;
+			}
+
+			function loadModel(daeFile) {
+				var loader = new THREE.ColladaLoader();
+				loader.options.convertUpAxis = true;
+				loader.options.upAxis = 'Y';
+				console.log(loader.load(daeFile, function(collada) {
+					var object = collada.scene;
+					object.scale.set(1,1,1);
+					object.updateMatrix();
+					return "object";
+				})	);
+				// console.log(object);
+			}
+
+			function animate() {
+				requestAnimationFrame(animate);
+				render();
+				// update();
+			}
+
+			function render() {
+				if (renderer) {
+					renderer.render(environment, camera);
+					// console.log("render");
+				}
+			}
+
+			function initialize() {
+				init();
+				animate();
+			}
+
+			if (window.addEventListener)
+				window.addEventListener('load', initialize, false);
+			else if (window.attachEvent)
+				window.attachEvent('onload', initializeLesson);
+			else window.onload = initialize;
+
+			// dae = loadDAE('/teapot.dae');
+			// init();
+			// render();
+
+			// function init() {
+
+			// 	container = document.createElement('div');
+			// 	document.body.appendChild(container);
+
+			// 	camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+
+
+			// 	scene = new THREE.Scene();
+
+			// 	// Add the COLLADA
+			// 	dae.position.set( 20, 0, 0)
+			// 	scene.add(dae);
+
+			// 	// Lights
+
+			// 	particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({
+			// 		color: 0xff0000
+			// 	}));
+			// 	scene.add(particleLight);
+			// 	scene.add(new THREE.AmbientLight(0x888888));
+
+			// 	//var pointLight = new THREE.PointLight(0xffffff, 2);
+			// 	var pointLight = new THREE.PointLight(0xff0000, 2);
+			// 	particleLight.add(pointLight);
+
+			// 	renderer = new THREE.WebGLRenderer();
+			// 	renderer.setSize(window.innerWidth, window.innerHeight);
+
+			// 	container.appendChild(renderer.domElement);
+
+
+			// 	window.addEventListener('resize', onWindowResize, false);
+
+
+			// 	<!--- camera position and rotation -->
+			// 	camera.position.set(50, 50, 50);
+			// 	// camera.rotation.set(0 , 0, 0);
+			// 	// console.log(dae.position);
+			// 	camera.lookAt(new THREE.Vector3( 0, 0, 0 ));
+			// }
+
+		</script>
+
+		<style>
+			body {
+				background-color: transparent;
+				margin: 0px;
+				overflow: hidden;
+				background-size: 100% 100%;
+			}
+		</style>
+	</head>
+	<body>
+	</body>
+</html>

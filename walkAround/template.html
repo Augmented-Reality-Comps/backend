@@ -5,72 +5,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-		<script src="three.min.js" type="text/javascript"></script>
+		<script src="three.js" type="text/javascript"></script>
 		<script src="ColladaLoader.js" type="text/javascript"></script>
 		<script src="threeRenderer.js" type="text/javascript"></script>
-		<script>
-			var camera, scene, renderer, objects;
-			var particleLight;
-			var dae;
-			var clock = new THREE.Clock();
 
-			var loader = new THREE.ColladaLoader();
-			loader.options.convertUpAxis = true;
-			loader.load('%s', function(collada) {
-
-				dae = collada.scene;
-				dae.scale.x = dae.scale.y = dae.scale.z = 1;
-				//dae.scale.x = dae.scale.y = dae.scale.z = .2;
-
-				dae.updateMatrix();
-
-				init();
-				render();
-
-			});
-
-			function init() {
-
-				container = document.createElement('div');
-				document.body.appendChild(container);
-
-				camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
-
-
-				scene = new THREE.Scene();
-
-				// Add the COLLADA
-				dae.position.set( % s, % s, % s)
-				scene.add(dae);
-
-				// Lights
-
-				particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({
-					color: 0xff0000
-				}));
-				scene.add(particleLight);
-				scene.add(new THREE.AmbientLight(0x888888));
-
-				//var pointLight = new THREE.PointLight(0xffffff, 2);
-				var pointLight = new THREE.PointLight(0xff0000, 2);
-				particleLight.add(pointLight);
-
-				renderer = new THREE.WebGLRenderer();
-				renderer.setSize(window.innerWidth, window.innerHeight);
-
-				container.appendChild(renderer.domElement);
-
-
-				window.addEventListener('resize', onWindowResize, false);
-
-
-				<!--- camera position and rotation -->
-				camera.position.set( % s, % s, % s);
-				camera.rotation.set( %s , %s, %s);
-				//camera.lookAt(dae.position);
-			}
-
-		</script>
 
 		<style>
 			body {
@@ -82,6 +20,19 @@
 		</style>
 	</head>
 	<body>
+		<script>
+			var camera, scene, renderer, particleLight, clock;
+			var objectList = % s;
+
+			container = document.createElement('div');
+  			document.body.appendChild(container);
+			init();
+			objectInitializer();
+			render();
+
+			// camera.lookAt(new THREE.Vector3(4935343, -7359142, 275));
+
+		</script>
 
 
 		<!---roughly .2 degrees -->

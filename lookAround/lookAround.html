@@ -24,8 +24,9 @@
 			var particleLight;
 			var clock = new THREE.Clock();
 
-			 var demo = 'show_objects';
+			 //var demo = 'show_objects';
 			//var demo = 'show_text';
+			var demo = 'show_map';
 
 			init();
 			render();
@@ -87,10 +88,10 @@
                 	//Teapot
                 	var loader = new THREE.ColladaLoader();
 					loader.options.convertUpAxis = true;
-					loader.load("teapot.dae", function(collada) {
+					loader.load("teapotRed.dae", function(collada) {
 						var teapot = collada.scene;
-						teapot.scale.x = teapot.scale.y = teapot.scale.z = 1;
-						teapot.position.set(50,0,0);
+						teapot.scale.x = teapot.scale.y = teapot.scale.z = 2;
+						teapot.position.set(10,0,0);
 						teapot.updateMatrix();
 						scene.add(teapot);
 					});
@@ -103,30 +104,103 @@
                 	torus.position.set(0, 0, -100);
                 	scene.add(torus);
 
-					var geometry = new THREE.TextGeometry("East", {font: "helvetiker", size: 5, height: 3});
+
+                	//FRONT
+					var geometry = new THREE.TextGeometry("In Front", {font: "helvetiker", size: 5, height: 3});
 					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
 					var textMesh = new THREE.Mesh(geometry, textWrapper);
 
 					textMesh.position.set(0, 100, 0);
-					textMesh.rotation.x = Math.PI / 8;
-
+					textMesh.rotation.x = Math.PI / 2;
 					scene.add(textMesh);
 
-					var geometry = new THREE.TextGeometry("South", {font: "helvetiker", size: 5, height: 3});
+					//BACK
+					var geometry = new THREE.TextGeometry("Behind", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(0, -100, 0);
+					textMesh.rotation.x = -Math.PI / 2;
+					//textMesh.rotation.y = -Math.PI / 2;
+					textMesh.rotation.z = Math.PI;
+					scene.add(textMesh);
+
+					//LEFT
+					var geometry = new THREE.TextGeometry("Left", {font: "helvetiker", size: 5, height: 3});
 					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
 					var textMesh = new THREE.Mesh(geometry, textWrapper);
 
 					textMesh.position.set(-100, 0, 0);
-					textMesh.rotation.x = Math.PI / 8;
+					textMesh.rotation.x = -Math.PI / 2;
+					textMesh.rotation.y = Math.PI / 2;
+					textMesh.rotation.z = Math.PI;
+					scene.add(textMesh);
+
+					//RIGHT
+					var geometry = new THREE.TextGeometry("Right", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(100, 0, 0);
+					textMesh.rotation.x = -Math.PI / 2;
+					textMesh.rotation.y = -Math.PI / 2;
+					textMesh.rotation.z = Math.PI;
+					scene.add(textMesh);
+				}
+				else if (demo == 'show_map') {
+					var geometry = new THREE.TorusGeometry(15, 4, 16, 16);
+                	var torus = new THREE.Mesh(geometry, material);
+                	torus.position.set(0, 0, -100);
+                	scene.add(torus);
+
+
+                	//FRONT
+					var geometry = new THREE.TextGeometry("Library", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(0, 100, 0);
+					textMesh.rotation.x = Math.PI / 2;
+					scene.add(textMesh);
+
+					//BACK
+					var geometry = new THREE.TextGeometry("Chapel", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(0, -100, 0);
+					textMesh.rotation.x = -Math.PI / 2;
 					//textMesh.rotation.y = -Math.PI / 2;
-					//textMesh.rotation.z = -Math.PI / 4;
+					textMesh.rotation.z = Math.PI;
+					scene.add(textMesh);
+
+					//LEFT
+					var geometry = new THREE.TextGeometry("Sayles", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(-100, 0, 0);
+					textMesh.rotation.x = -Math.PI / 2;
+					textMesh.rotation.y = Math.PI / 2;
+					textMesh.rotation.z = Math.PI;
+					scene.add(textMesh);
+
+					//RIGHT
+					var geometry = new THREE.TextGeometry("Music Hall", {font: "helvetiker", size: 5, height: 3});
+					var textWrapper = new THREE.MeshNormalMaterial({color: 0x00ff00});
+					var textMesh = new THREE.Mesh(geometry, textWrapper);
+
+					textMesh.position.set(100, 0, 0);
+					textMesh.rotation.x = -Math.PI / 2;
+					textMesh.rotation.y = -Math.PI / 2;
+					textMesh.rotation.z = Math.PI;
 					scene.add(textMesh);
 				}
 
 				// Lights
 
 				particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({
-					color: 0xff0000
+					color: 0xffffff
 				}));
 				scene.add(particleLight);
 				scene.add(new THREE.AmbientLight(0x888888));

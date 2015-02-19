@@ -18,17 +18,12 @@ def getCGIParameters():
         user input. We expect latitude, longitude, altitude, yaw, pitch, roll.
     '''
     form = cgi.FieldStorage()
-    parameters = {'latitude':'', 'longitude':'', 'altitude':'', 'yaw':'', 'pitch':'', 'roll':''}
-
+    parameters = {'latitude':'', 'longitude':'', 'altitude':''}
 
     #sets default values for each field
     parameters['latitude'] = 0
     parameters['longitude'] = 0
     parameters['altitude'] = 0
-    parameters['yaw'] = 0
-    parameters['pitch'] = 0
-    parameters['roll'] = 0
-
 
     #sets parameters as they are passed
     if 'latitude' in form:
@@ -40,19 +35,9 @@ def getCGIParameters():
     if 'altitude' in form:
         parameters['altitude'] = sanitizeUserInput(form['altitude'].value)
 
-    if 'yaw' in form:
-        parameters['yaw'] = sanitizeUserInput(form['yaw'].value)
-
-    if 'pitch' in form:
-        parameters['pitch'] = sanitizeUserInput(form['pitch'].value)
-
-    if 'roll' in form:
-        parameters['roll'] = sanitizeUserInput(form['roll'].value)
-
     return parameters
 
-
-def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templateFileName):
+def printMainPageAsHTML(latitude, longitude, altitude, templateFileName):
     '''
     Prints the page as an htmp based off of template.html. There are 9 fields that must be filled
     in template.html they are in the following order:
@@ -60,12 +45,11 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
     pitch roll and yaw must be in radians
     '''
 
-
-    file = getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll)
+    # file = getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll)
+    objectList = getAllObjects()
     #pulls the latitude longitude altitude from th database.
     #THIS WORKS ONLY FOR 1 OBJECT. Fix when there is time
-    object_loc = (file[0][0], file[0][1], file[0][2])
-
+    # object_loc = (file[0][0], file[0][1], file[0][2])
 
     #read the template file
     f = open(templateFileName)
@@ -74,36 +58,15 @@ def printMainPageAsHTML(latitude, longitude, altitude, yaw, pitch, roll, templat
 
     #put the correct data into the template file
     #angles must be in radians
-    outputText = templateText % (file[0][3], object_loc[0], object_loc[1], object_loc[2], latitude, longitude, altitude, pitch, roll, yaw)
+    outputText = templateText % (objectList)
+    # outputText = templateText % (file[0][3], object_loc[0], object_loc[1], object_loc[2], latitude, longitude, altitude, pitch, roll, yaw)
 
     #displays the page
     print 'Content-type: text/html\r\n\r\n',
     print outputText
 
-    #creates a log for debugging
-    # makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc)
-
-
-# def makeLog(latitude, longitude, altitude, yaw, pitch, roll, object_loc):
-#     '''
-#     Makes a log in log.txt. Every time a http request is sent, log the current time, object position,
-#     camera position, and camera orientation
-#     '''
-#     log = time.strftime("Month:%m Day:%d Hour:%H Min:%M Sec:%S\n")
-#     #log += latitude
-#     #log += "object location: " + str(object_loc)
-#     #log += "\nCamera location: " + latitude + ", " + altitude + ", " + longitude
-#     #log += "\nCamera position: " + yaw + ", " + pitch + ", " + roll + "\n-------------------------------------------------\n"
-
-#     f = open('log.txt', 'a')
-#     f.write(log)
-#     f.close()
-
-#     g = open('testlog.txt', 'a')
-#     g.write("testing")
-#     g.close()
-
-def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
+# def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
+def getAllObjects():
     '''
     Gets all the relevant objects for the given location. Currently this returns everything in the database.
     '''
@@ -111,11 +74,22 @@ def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
     db = DataSource()
 
     #make the query
-    return db.getData('Select * from demo;')
+    objectListFromDB = db.getData('Select * from demo;')
+
+    objectListToReturn = []
+    for objectTuple in objectListFromDB:
+        objectItem = {}
+        objectItem['latitude'] = objectTuple[0]
+        objectItem['longitude'] = objectTuple[1]
+        objectItem['altitude'] = objectTuple[2]
+        objectItem['filename'] = objectTuple[3]
+        objectListToReturn.append(objectItem)
+
+    return objectListToReturn
 
 def main():
     parameters = getCGIParameters()
-    printMainPageAsHTML(parameters['latitude'], parameters['longitude'], parameters['altitude'],  parameters['yaw'], parameters['pitch'], parameters['roll'], 'template.html')
+    printMainPageAsHTML(parameters['latitude'], parameters['longitude'], parameters['altitude'], 'template.html')
 
 if __name__ == '__main__':
     main()

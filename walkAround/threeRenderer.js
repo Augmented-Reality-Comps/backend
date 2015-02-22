@@ -1,12 +1,5 @@
-function getLocation() {
-  return [camera.position.x, camera.position.y, camera.position.z]
-}
-
-function getAngle() {
-  return [camera.rotation.x, camera.rotation.y, camera.rotation.z]
-}
-
 function updateScene(lat, long, alt, pitch, roll, yaw) {
+  //I'm not convinced that this is doing anything and would like to remove it because dom element manipulations take a lot of time
   container = document.getElementById("scene");
 
   camera.position.set(lat, long, alt)
@@ -28,18 +21,19 @@ function render() {
 }
 
 function init() {
-  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 20000);
   scene = new THREE.Scene();
   renderer = new THREE.WebGLRenderer();
   clock = new THREE.Clock();
-  particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({color: 0xff0000}));
+  particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({color: 0x1ad9e0}));
 
   scene.add(particleLight);
   scene.add(new THREE.AmbientLight(0x888888));
 
-  var pointLight = new THREE.PointLight(0xff0000, 2);
+  var pointLight = new THREE.PointLight(0x1ad9e0, 2);
   particleLight.add(pointLight);
 
+  
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   container.appendChild(renderer.domElement);
@@ -48,22 +42,31 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    loadModel(objectList[i]['filename'], objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], 1);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], 1, 0, 0, 0);
   }
 }
 
-function loadModel(daeFile, name, x,y,z, scale) {
+function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
   var loader = new THREE.ColladaLoader();
   loader.options.convertUpAxis = true;
   loader.load(daeFile, function(collada) {
+    //upload each object
     var object = collada.scene;
     object.scale.set(scale,scale,scale);
-    object.name = name;
+    object.name = daeFile;
     object.updateMatrix();
     object.position.set(x,y,z);
+    object.rotation.set(rotationX,rotationY,rotationZ);
     scene.add(object);
+    //give each object directional light
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02 );
+    directionalLight.position.set( x, y ,z); 
+    scene.add( directionalLight );
   });
 }
+
+//These methods should be depracated because we no longer use them for testing
+//We can use update scene to test in the browser window
 
 //Camera view button methods
 function changeX(distance) {

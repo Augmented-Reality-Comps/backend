@@ -4,7 +4,6 @@ import cgi
 import time
 from datasource import DataSource
 
-
 def sanitizeUserInput(s):
     ''' does a basic sanitation on input
     '''

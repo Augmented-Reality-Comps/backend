@@ -27,8 +27,17 @@
 			container = document.createElement('div');
   			document.body.appendChild(container);
 			init();
-			objectInitializer();
+			//objectInitializer();
+			loadModel(objectList[0]['filename'], objectList[0]['latitude'], objectList[0]['longitude'], objectList[0]['altitude'], 2, 0, 0, 3.14/2*-1);
+			loadModel(objectList[1]['filename'], objectList[1]['latitude'], objectList[1]['longitude'], objectList[1]['altitude'], 2, 0, 0, 3.14/2);
+			loadModel(objectList[2]['filename'], objectList[2]['latitude'], objectList[2]['longitude'], objectList[2]['altitude'], 2, 0, 0, 0);
+			loadModel(objectList[3]['filename'], objectList[3]['latitude'], objectList[3]['longitude'], objectList[3]['altitude'], 2, 0, 0, 3.14);
 			render();
+
+			//Hulings: 4446093, -9315333
+			//Library: 4446238, -9315470
+			//Sayles: 4446136, -9315613
+			//Chapel: 4446015, -9315482
 
 			// camera.lookAt(new THREE.Vector3(4935343, -7359142, 275));
 

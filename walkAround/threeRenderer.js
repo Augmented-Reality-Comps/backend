@@ -1,6 +1,5 @@
 function updateScene(lat, lon, alt, pitch, roll, yaw) {
-  //I'm not convinced that this is doing anything and would like to remove it because dom element manipulations take a lot of time
-  container = document.getElementById("scene");
+//  container = document.getElementById("scene");
 
   camera.position.set(lat, lon, alt)
   camera.rotation.set(pitch, roll, yaw);
@@ -33,7 +32,6 @@ function init() {
   var pointLight = new THREE.PointLight(0x1ad9e0, 2);
   particleLight.add(pointLight);
 
-  
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   container.appendChild(renderer.domElement);
@@ -42,8 +40,7 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    //loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
-    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, 0, 0, 0);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
   }
 }
 
@@ -66,32 +63,3 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     
   });
 }
-
-//These methods should be depracated because we no longer use them for testing
-//We can use update scene to test in the browser window
-
-//Camera view button methods
-function changeX(distance) {
-  camera.position.x += distance;
-}
-
-function changeY(distance) {
-  camera.position.y += distance;
-}
-
-function changeZ(distance) {
-  camera.position.z += distance;
-}
-
-function anglePitch(radians) {
-  camera.rotation.x += radians
-}
-
-function angleRoll(radians) {
-  camera.rotation.y += radians
-}
-
-function angleYaw(radians) {
-  camera.rotation.z += radians
-}
-

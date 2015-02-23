@@ -27,11 +27,17 @@
 			container = document.createElement('div');
   			document.body.appendChild(container);
 			init();
+			//For when rotation doesn't matter
 			//objectInitializer();
-			loadModel(objectList[0]['filename'], objectList[0]['latitude'], objectList[0]['longitude'], objectList[0]['altitude'], 2, 0, 0, 3.14/2*-1);
-			loadModel(objectList[1]['filename'], objectList[1]['latitude'], objectList[1]['longitude'], objectList[1]['altitude'], 2, 0, 0, 3.14/2);
-			loadModel(objectList[2]['filename'], objectList[2]['latitude'], objectList[2]['longitude'], objectList[2]['altitude'], 2, 0, 0, 0);
-			loadModel(objectList[3]['filename'], objectList[3]['latitude'], objectList[3]['longitude'], objectList[3]['altitude'], 2, 0, 0, 3.14);
+
+			//Everything after this needs to be deleted
+			
+			//For when rotation matters, after code freeze maybe add to database
+			loadModel(objectList[0]['filename'], objectList[0]['latitude'], objectList[0]['longitude']*-1, objectList[0]['altitude'], 2, 0, 0, 3.14);
+			loadModel(objectList[1]['filename'], objectList[1]['latitude'], objectList[1]['longitude']*-1, objectList[1]['altitude'], 2, 0, 0, 0);
+			loadModel(objectList[2]['filename'], objectList[2]['latitude'], objectList[2]['longitude']*-1, objectList[2]['altitude'], 2, 0, 0, 3.14/2);
+			loadModel(objectList[3]['filename'], objectList[3]['latitude'], objectList[3]['longitude']*-1, objectList[3]['altitude'], 2, 0, 0, -3.14/2);
+
 			render();
 
 			//Hulings: 4446093, -9315333

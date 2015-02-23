@@ -1,8 +1,8 @@
-function updateScene(lat, long, alt, pitch, roll, yaw) {
+function updateScene(lat, lon, alt, pitch, roll, yaw) {
   //I'm not convinced that this is doing anything and would like to remove it because dom element manipulations take a lot of time
   container = document.getElementById("scene");
 
-  camera.position.set(lat, long, alt)
+  camera.position.set(lat, lon, alt)
   camera.rotation.set(pitch, roll, yaw);
 
   renderer.render(scene, camera);
@@ -42,7 +42,7 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], 1, 0, 0, 0);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, 0, 0, 0);
   }
 }
 
@@ -59,9 +59,10 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     object.rotation.set(rotationX,rotationY,rotationZ);
     scene.add(object);
     //give each object directional light
-    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.02 );
+    var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.2 );
     directionalLight.position.set( x, y ,z); 
     scene.add( directionalLight );
+    
   });
 }
 

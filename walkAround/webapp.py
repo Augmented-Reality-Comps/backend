@@ -73,7 +73,7 @@ def getAllObjects():
     db = DataSource()
 
     #make the query
-    objectListFromDB = db.getData('Select * from demo;')
+    objectListFromDB = db.getData('Select * from object_table;')
 
     objectListToReturn = []
     for objectTuple in objectListFromDB:
@@ -82,6 +82,9 @@ def getAllObjects():
         objectItem['longitude'] = objectTuple[1]
         objectItem['altitude'] = objectTuple[2]
         objectItem['filename'] = objectTuple[3]
+        objectItem['x_rot'] = objectTuple[4]
+        objectItem['y_rot'] = objectTuple[5]
+        objectItem['z_rot'] = objectTuple[6]
         objectListToReturn.append(objectItem)
 
     return objectListToReturn

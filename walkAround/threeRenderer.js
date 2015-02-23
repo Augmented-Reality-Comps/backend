@@ -42,6 +42,7 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
+    //loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
     loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, 0, 0, 0);
   }
 }

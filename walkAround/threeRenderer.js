@@ -1,9 +1,8 @@
+
+
 function updateScene(lat, lon, alt, pitch, roll, yaw) {
-//  container = document.getElementById("scene");
-
-  camera.position.set(lat, lon, alt)
-  camera.rotation.set(pitch, roll, yaw);
-
+  camera.position.set(lat, lon, alt);
+  camera.rotation.set(pitch, roll, yaw, 'ZXY');  
   renderer.render(scene, camera);
 }
 
@@ -40,7 +39,7 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], .6, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
   }
 }
 
@@ -54,6 +53,7 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     object.name = daeFile;
     object.updateMatrix();
     object.position.set(x,y,z);
+  //  object.matrixAutoUpdate = false;
     object.rotation.set(rotationX,rotationY,rotationZ);
     scene.add(object);
     //give each object directional light

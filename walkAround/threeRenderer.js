@@ -1,8 +1,9 @@
 
-
 function updateScene(lat, lon, alt, pitch, roll, yaw) {
   camera.position.set(lat, lon, alt);
-  camera.rotation.set(pitch, roll, yaw, 'ZXY');  
+  camera.rotation.set(pitch, roll, yaw, 'ZXY');
+  gridHelper.position.set(lat, lon, 100);
+  axes.position.set(lat, lon, 100);
   renderer.render(scene, camera);
 }
 
@@ -26,7 +27,15 @@ function init() {
   particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({color: 0x1ad9e0}));
 
   scene.add(particleLight);
-  scene.add(new THREE.AmbientLight(0x888888));
+
+  //gridlines
+  gridHelper = new THREE.GridHelper( 100, 3 );
+  gridHelper.rotation.x = Math.PI/2;
+  scene.add( gridHelper );
+
+  //axes
+  axes = new THREE.AxisHelper(25);
+  scene.add(axes);
 
   var pointLight = new THREE.PointLight(0x1ad9e0, 2);
   particleLight.add(pointLight);
@@ -39,7 +48,7 @@ function init() {
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude']*-1, objectList[i]['altitude'], .6, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
   }
 }
 
@@ -53,6 +62,7 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     object.name = daeFile;
     object.updateMatrix();
     object.position.set(x,y,z);
+    console.log(object.position);
   //  object.matrixAutoUpdate = false;
     object.rotation.set(rotationX,rotationY,rotationZ);
     scene.add(object);

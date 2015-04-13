@@ -1,9 +1,9 @@
 
 function updateScene(lat, lon, alt, pitch, roll, yaw) {
-  camera.position.set(lat, lon, alt);
+  camera.position.set(lon, lat, alt);
   camera.rotation.set(pitch, roll, yaw, 'ZXY');
-  gridHelper.position.set(lat, lon, 100);
-  axes.position.set(lat, lon, 100);
+  gridHelper.position.set(lon, lat, 100);
+  axes.position.set(lon, lat, 100);
   renderer.render(scene, camera);
 }
 
@@ -29,7 +29,7 @@ function init() {
   scene.add(particleLight);
 
   //gridlines
-  gridHelper = new THREE.GridHelper( 100, 3 );
+  gridHelper = new THREE.GridHelper( 200, 5 );
   gridHelper.rotation.x = Math.PI/2;
   scene.add( gridHelper );
 
@@ -43,12 +43,12 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   container.appendChild(renderer.domElement);
-  window.addEventListener('resize', onWindowResize, false);
+  // window.addEventListener('resize', onWindowResize, false);
 }
 
 function objectInitializer() {
   for (i = 0; i < objectList.length; i++){
-    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], 1, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
+    loadModel(objectList[i]['filename'], objectList[i]['latitude'], objectList[i]['longitude'], objectList[i]['altitude'], .75, objectList[i]['x_rot'], objectList[i]['y_rot'], objectList[i]['z_rot']);
   }
 }
 
@@ -59,9 +59,9 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     //upload each object
     var object = collada.scene;
     object.scale.set(scale,scale,scale);
-    object.name = daeFile;
+    // object.name = daeFile;
     object.updateMatrix();
-    object.position.set(x,y,z);
+    object.position.set(y,x,z);
     console.log(object.position);
   //  object.matrixAutoUpdate = false;
     object.rotation.set(rotationX,rotationY,rotationZ);
@@ -72,4 +72,4 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     scene.add( directionalLight );
     
   });
-}
+} 

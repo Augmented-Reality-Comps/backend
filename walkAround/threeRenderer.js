@@ -1,49 +1,31 @@
 
 function updateScene(lat, lon, alt, pitch, roll, yaw) {
   camera.position.set(lon, lat, alt);
-  camera.rotation.set(pitch, roll, yaw, 'ZXY');
-  gridHelper.position.set(lon, lat, 100);
-  axes.position.set(lon, lat, 100);
-  renderer.render(scene, camera);
-}
-
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function render() {
-  requestAnimationFrame(render);
-  THREE.AnimationHandler.update(clock.getDelta());
+  camera.rotation.set(pitch, roll, yaw);
+  gridHelper.position.set(lon, lat, 0);
+  axes.position.set(lon, lat, 1);
   renderer.render(scene, camera);
 }
 
 function init() {
-  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 20000);
+  camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight,01, 2000);
+  camera.rotation.order = 'ZXY';
   scene = new THREE.Scene();
   renderer = new THREE.WebGLRenderer();
-  clock = new THREE.Clock();
-  particleLight = new THREE.Mesh(new THREE.SphereGeometry(8, 8, 8), new THREE.MeshBasicMaterial({color: 0x1ad9e0}));
-
-  scene.add(particleLight);
 
   //gridlines
   gridHelper = new THREE.GridHelper( 200, 5 );
-  gridHelper.rotation.x = Math.PI/2;
+  gridHelper.rotation.x = 3.14/2.0;
   scene.add( gridHelper );
 
   //axes
-  axes = new THREE.AxisHelper(25);
+  axes = new THREE.AxisHelper(50);
   scene.add(axes);
 
-  var pointLight = new THREE.PointLight(0x1ad9e0, 2);
-  particleLight.add(pointLight);
-
   renderer.setSize(window.innerWidth, window.innerHeight);
-
   container.appendChild(renderer.domElement);
-  // window.addEventListener('resize', onWindowResize, false);
+
+  objectInitializer();
 }
 
 function objectInitializer() {
@@ -59,17 +41,14 @@ function loadModel(daeFile, x,y,z, scale, rotationX, rotationY, rotationZ) {
     //upload each object
     var object = collada.scene;
     object.scale.set(scale,scale,scale);
-    // object.name = daeFile;
     object.updateMatrix();
     object.position.set(y,x,z);
-    console.log(object.position);
-  //  object.matrixAutoUpdate = false;
     object.rotation.set(rotationX,rotationY,rotationZ);
     scene.add(object);
+
     //give each object directional light
     var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.2 );
-    directionalLight.position.set( x, y ,z); 
+    directionalLight.position.set( x, y ,z);
     scene.add( directionalLight );
-    
   });
-} 
+}

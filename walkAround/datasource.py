@@ -11,6 +11,42 @@ class DataSource:
     from the database MUST call this function
     '''
     # Login to the database
+    connection = self.login()
+
+    # Query the database
+    try:
+      cursor = connection.cursor()
+      cursor.execute(query)
+      return cursor.fetchall()
+
+    except Exception, e:
+      print 'Cursor error', e
+      connection.close()
+      exit()
+
+    connection.close()
+
+  def sendQueries(self, queries):
+    '''
+    Execute a list of queries
+    '''
+    connection = self.login()
+
+    # Query the database
+    try:
+      cursor = connection.cursor()
+      for query in queries:
+        cursor.execute(query)
+
+    except Exception, e:
+      print 'Cursor error', e
+      connection.close()
+      exit()
+    connection.commit()
+    connection.close()
+
+  def login(self):
+    # Login to the database
     database = 'comps'
     user = 'comps'
     password='jeffcomps#1'
@@ -19,21 +55,4 @@ class DataSource:
     except Exception, e:
       print 'Connection error: ', e
       exit()
-
-    # Query the database
-    try:
-      cursor = connection.cursor()
-      cursor.execute(query)
-      return cursor.fetchall()
-
-
-    # An alternative to "for row in cursor.fetchall()" is "for row in cursor". The former
-    # brings all the data into memory in your program, while the latter brings data in
-    # small pieces (one row at a time, I think, but I haven't verified it yet).
-
-    except Exception, e:
-      print 'Cursor error', e
-      connection.close()
-      exit()
-
-    connection.close()
+    return connection

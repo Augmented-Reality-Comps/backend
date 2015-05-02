@@ -2,6 +2,7 @@
 
 import cgi
 import time
+import random
 from datasource import DataSource
 
 def sanitizeUserInput(s):
@@ -46,9 +47,6 @@ def printMainPageAsHTML(latitude, longitude, altitude, templateFileName):
 
     # file = getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll)
     objectList = getAllObjects()
-    #pulls the latitude longitude altitude from th database.
-    #THIS WORKS ONLY FOR 1 OBJECT. Fix when there is time
-    # object_loc = (file[0][0], file[0][1], file[0][2])
 
     #read the template file
     f = open(templateFileName)
@@ -58,36 +56,30 @@ def printMainPageAsHTML(latitude, longitude, altitude, templateFileName):
     #put the correct data into the template file
     #angles must be in radians
     outputText = templateText % (objectList)
-    # outputText = templateText % (file[0][3], object_loc[0], object_loc[1], object_loc[2], latitude, longitude, altitude, pitch, roll, yaw)
 
     #displays the page
     print 'Content-type: text/html\r\n\r\n',
     print outputText
 
-# def getObjectsForLocation(latitude, longitude, altitude, yaw, pitch, roll):
 def getAllObjects():
     '''
     Gets all the relevant objects for the given location. Currently this returns everything in the database.
     '''
-    #creates a connection to the database
-    db = DataSource()
-
     #make the query
-    objectListFromDB = db.getData('Select * from object_table;')
+    return [{'latitude': objectTuple[0],
+            'longitude': objectTuple[1],
+            'altitude': objectTuple[2],
+            'filename': objectTuple[3],
+            'x_rot': objectTuple[4],
+            'y_rot': objectTuple[5],
+            'z_rot': objectTuple[6]
+        } for objectTuple in DataSource().getData('Select * from object_table;')]
 
-    objectListToReturn = []
-    for objectTuple in objectListFromDB:
-        objectItem = {}
-        objectItem['latitude'] = objectTuple[0]
-        objectItem['longitude'] = objectTuple[1]
-        objectItem['altitude'] = objectTuple[2]
-        objectItem['filename'] = objectTuple[3]
-        objectItem['x_rot'] = objectTuple[4]
-        objectItem['y_rot'] = objectTuple[5]
-        objectItem['z_rot'] = objectTuple[6]
-        objectListToReturn.append(objectItem)
+def sendTestObjects(number, lat, lon, alt):
+    DataSource().sendQueries([("insert into object_table values(%s, %s, %s, 'objects/teapot3.dae', 1,0,0);" % (coord[0], coord[1], coord[2])) for coord in [[lat + random.randint(-50, 50), lon + random.randint(-50, 50), alt + random.randint(-20, 20)] for i in range(number)]])
 
-    return objectListToReturn
+def removeTestObjects():
+    DataSource().sendQueries(['delete from object_table where x_rot = 1;'])
 
 def main():
     parameters = getCGIParameters()
